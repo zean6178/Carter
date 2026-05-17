@@ -30,8 +30,12 @@ const DEFAULT_STATE = {
 };
 
 // ─── Load / Save ──────────────────────────────────────────────────────────────
+function deepCloneDefault() {
+  return JSON.parse(JSON.stringify(DEFAULT_STATE));
+}
+
 function loadState() {
-  if (!existsSync(STATE_PATH)) return { ...DEFAULT_STATE };
+  if (!existsSync(STATE_PATH)) return deepCloneDefault();
   try {
     const raw = JSON.parse(readFileSync(STATE_PATH, 'utf-8'));
     // Reset daily stats if new day
@@ -40,9 +44,10 @@ function loadState() {
       raw.dailyStats = { ...DEFAULT_STATE.dailyStats, date: today };
       raw.closedToday = [];
     }
-    return { ...DEFAULT_STATE, ...raw };
+    const defaults = deepCloneDefault();
+    return { ...defaults, ...raw };
   } catch {
-    return { ...DEFAULT_STATE };
+    return deepCloneDefault();
   }
 }
 

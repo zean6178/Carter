@@ -161,9 +161,10 @@ export function checkExitConditions(position, currentPriceSol) {
     };
   }
 
-  // ── 3. Take Profit Levels ─────────────────────────────────────────────────
+  // ── 3. Take Profit Levels (check from highest to lowest) ────────────────
   const soldPct = position.soldPct || 0;
-  for (const level of exit.takeProfitLevels) {
+  const sortedLevels = [...exit.takeProfitLevels].sort((a, b) => b.triggerMultiple - a.triggerMultiple);
+  for (const level of sortedLevels) {
     if (currentMultiple >= level.triggerMultiple) {
       // Check apakah level ini sudah dijual
       const alreadySold = position.sellHistory?.some(

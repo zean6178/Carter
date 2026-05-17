@@ -7,6 +7,17 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+// ─── Validate critical env vars ─────────────────────────────────────────────
+if (!process.env.WALLET_PRIVATE_KEY) {
+  console.error('❌ WALLET_PRIVATE_KEY is not set in .env — bot cannot start.');
+  console.error('   Copy .env.example → .env and fill in your wallet key.');
+  process.exit(1);
+}
+
+if (!process.env.RPC_URL) {
+  console.warn('⚠️  RPC_URL not set — using default public Solana RPC (slow, rate-limited).');
+}
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // CONFIGURATION
 // ═══════════════════════════════════════════════════════════════════════════════

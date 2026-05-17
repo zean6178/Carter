@@ -8,11 +8,8 @@
 
 import WebSocket from 'ws';
 import chalk from 'chalk';
-import dayjs from 'dayjs';
 import { getConfig } from './config.js';
-import { runScreening } from './screening.js';
 import { isDeployerBlacklisted, isTokenBlacklisted } from './state.js';
-import { sendTelegram } from './telegram.js';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // PUMP.FUN WEBSOCKET LISTENER
